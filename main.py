@@ -40,9 +40,9 @@ def connect():
 def disconnect():
     print('Client disconnected',  request.sid)
 
-@socketio.on('clicked')
-def clicked(json):
-    print('Client clicked', json)
+@socketio.on('GPIO')
+def clicked(data):
+    print('Client clicked', data['relay'], data['state'])
 
 if __name__ == '__main__':
     socketio.run(app)
