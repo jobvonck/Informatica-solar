@@ -12,17 +12,21 @@
     <script>
       var socket = io()
 
-      function myFunction() {
-        socket.emit('clicked', {relay1: "off"})
+      function SendGpio(relay, state) {
+        socket.emit('GPIO', {relay: relay, state: state})
       }
     </script>
-    <h3 onclick="myFunction()">Click me to change my color.</h3>
+
+    <div>
+      <div class="button_container"><p>GPIO0</p><button onclick="SendGpio('GPIO0', 'ON')">On</button><button onclick="SendGpio('GPIO0', 'OFF')">OFF</button></div>
+      <div class="button_container"><p>GPIO1</p><button onclick="SendGpio('GPIO1', 'ON')">On</button><button onclick="SendGpio('GPIO1', 'OFF')">OFF</button></div>
+    </div>
 
     <script>
       socket.on("updateNumber", function (msg) {
         document.getElementById("demo").innerHTML = msg.value; 
       });
       </script>
-    <span id="demo"></span>
+    <h1 id="demo"></span>
   </body>
 </html>
