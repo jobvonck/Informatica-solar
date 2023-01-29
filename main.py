@@ -19,7 +19,7 @@ def background_thread():
     print("Generating random sensor values")
     while True:
         dummy_sensor_value = round(random() * 100, 3)
-        socketio.emit('updateNumber', {'value': dummy_sensor_value, "date": get_current_datetime()})
+        socketio.emit('updateNumber', {'value': dummy_sensor_value})
         socketio.sleep(1)
 
 @app.route('/')
@@ -41,7 +41,7 @@ def disconnect():
     print('Client disconnected',  request.sid)
 
 @socketio.on('GPIO')
-def clicked(data):
+def Handle_GPIO(data):
     print('Client clicked', data['relay'], data['state'])
 
 if __name__ == '__main__':
