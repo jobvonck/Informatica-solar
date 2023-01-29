@@ -11,6 +11,8 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'donsky!'
 socketio = SocketIO(app, cors_allowed_origins='*')
 
+relays = {'R0':0, 'R1':0}
+
 def get_current_datetime():
     now = datetime.now()
     return now.strftime("%m/%d/%Y %H:%M:%S")
@@ -42,7 +44,12 @@ def disconnect():
 
 @socketio.on('GPIO')
 def Handle_GPIO(data):
-    print('Client clicked', data['relay'], data['state'])
+    print('Client clicked, pin =', relays[data['relay']], data['state'])
+    pin = relays[data['relay']]
+    if data['state'] == 'ON':
+        print("turning on", pin)
+    elif data['state'] == 'OFF':
+        print("turning off", pin)
 
 if __name__ == '__main__':
     socketio.run(app)
