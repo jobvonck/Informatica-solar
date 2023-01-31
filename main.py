@@ -23,7 +23,7 @@ def background_thread():
     print("Generating random sensor values")
     while True:
         dummy_sensor_value = round(random() * 100, 3)
-        socketio.emit("updateNumber", {"value": dummy_sensor_value})
+        socketio.emit('updateSensorData', {'value': dummy_sensor_value, "date": get_current_datetime()})
         socketio.sleep(1)
 
 
