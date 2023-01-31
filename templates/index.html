@@ -1,32 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="static/styles/styles.css">
-    <title>Dashboard</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Real Time Sensor Display Using Python, Flask, Flask-SocketIO</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <link
+      href="//mincss.com/entireframework.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link href="{{url_for('static', filename = 'css/app.css')}}" rel="stylesheet">
   </head>
   <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
-    <script>
-      var socket = io()
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/app.js') }}"></script>
 
-      function SendGpio(relay, state) {
-        socket.emit('GPIO', {relay: relay, state: state})
-      }
-    </script>
-
+    <nav class="nav" tabindex="-1" onclick="this.focus()">
+      <div class="container">
+        <a class="pagename current" href="#">Informatica dashboard</a>
+      </div>
+    </nav>
+    <button class="btn-close btn btn-sm">×</button>
+    <div class="container">
+      <div class="hero">
+        <h1>Real Time Sensor Display</h1>
+        <div class="chart-container">
+          <canvas id="myChart" width="1000" height="600"></canvas>
+        </div>
+      </div>
+    </div>
     <div>
       <div class="button_container"><p>GPIO0</p><button onclick="SendGpio('R0', 'ON')">On</button><button onclick="SendGpio('R0', 'OFF')">OFF</button></div>
       <div class="button_container"><p>GPIO1</p><button onclick="SendGpio('R1', 'ON')">On</button><button onclick="SendGpio('R1', 'OFF')">OFF</button></div>
     </div>
-
     <script>
-      socket.on("updateNumber", function (msg) {
-        document.getElementById("demo").innerHTML = msg.value; 
-      });
-      </script>
-    <h1 id="demo"></span>
+      var socket = io.connect();
+      function SendGpio(relay, state) {
+        socket.emit('GPIO', {relay: relay, state: state})
+      }
+    </script>
   </body>
 </html>
