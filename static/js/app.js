@@ -43,4 +43,3 @@ $(document).ready(function () {
       addData(msg.date, msg.value);
     });
   });
-  
