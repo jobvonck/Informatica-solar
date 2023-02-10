@@ -13,18 +13,16 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 
 relays = {"R0": 0, "R1": 0}
 
-
 def get_current_datetime():
     now = datetime.now()
     return now.strftime("%m/%d/%Y %H:%M:%S")
-
 
 def background_thread():
     print("Generating random sensor values")
     while True:
         dummy_sensor_value = round(random() * 100, 3)
         socketio.emit('updateSensorData', {'value': dummy_sensor_value, "date": get_current_datetime()})
-        socketio.sleep(1)
+        socketio.sleep(2)
 
 
 @app.route("/")
