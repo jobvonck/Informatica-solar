@@ -1,10 +1,10 @@
-class Sensor_Data:
+class PI:
     def __init__(self):
         pass
     def get_data():
         return "test"
 
-class Test_Data:
+class Test_PI:
     def __init__(self):
         pass
     def get_data():
