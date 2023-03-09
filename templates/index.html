@@ -4,10 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Real Time Sensor Display Using Python, Flask, Flask-SocketIO</title>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ==" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
     <link
       href="//mincss.com/entireframework.min.css"
       rel="stylesheet"
@@ -23,15 +21,21 @@
         <a class="pagename current" href="#">Informatica dashboard</a>
       </div>
     </nav>
+    <table>
+      <tr>
+        <td>Zonnepaneel (W):</td>
+        <td id="p1"></td>
+      </tr>
+      <tr>
+        <td>Batterij (W):</td>
+        <td id="p2"></td>
+      </tr>
+      <tr>
+        <td>Gebruik (W):</td>
+        <td id="p3"></td>
+      </tr>
+    </table>
     <button class="btn-close btn btn-sm">×</button>
-    <div class="container">
-      <div class="hero">
-        <h1>Real Time Sensor Display</h1>
-        <div class="chart-container">
-          <canvas id="myChart" width="1000" height="600"></canvas>
-        </div>
-      </div>
-    </div>
     <div>
       <div class="button_container"><p>GPIO0</p><button onclick="SendGpio('R0', 'ON')">On</button><button onclick="SendGpio('R0', 'OFF')">OFF</button></div>
       <div class="button_container"><p>GPIO1</p><button onclick="SendGpio('R1', 'ON')">On</button><button onclick="SendGpio('R1', 'OFF')">OFF</button></div>
