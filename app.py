@@ -8,7 +8,7 @@ thread = None
 thread_lock = Lock()
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "donsky!"
+app.config["SECRET_KEY"] = "SolarShit"
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 relays = {"R0": 0, "R1": 1, "R2": 1,"R3": 1,"R4": 1,"R5": 1,"R6": 1,"R7": 1}
