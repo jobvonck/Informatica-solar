@@ -1,0 +1,53 @@
+.toggle {
+  margin:0 0 0 2rem;
+  position: relative;
+  display: inline-block;
+  width: 6rem;
+  height: 3.4rem;
+}
+
+.toggle input {
+  display: none;
+}
+
+.roundbutton {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  background-color: #33455e;
+  display: block;
+  transition: all 0.3s;
+  border-radius: 3.4rem;
+  cursor: pointer;
+}
+
+.roundbutton:before {
+  position: absolute;
+  content: "";
+  height: 2.4rem;
+  width: 2.5rem;
+  border-radius: 100%;
+  display: block;
+  left: 0.5rem;
+  bottom: 0.5rem;
+  background-color: white;
+  transition: all 0.3s;
+}
+
+input:checked + .roundbutton {
+  background-color: #FF6E48;
+}
+
+input:checked + .roundbutton:before  {
+  transform: translate(2.6rem, 0);
+}
+
+.button {
+  width: 15%;
+  display: -webkit-inline-box;
+  padding: 10px;
+  border-style: solid;
+}

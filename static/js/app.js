@@ -10,4 +10,18 @@ $(document).ready(function () {
   socket.on('UpdateButtons', function (data) {
     console.log(data)
   })
+
+  function SendGpio(relay, state) {
+    socket.emit('GPIO', {relay: relay, state: state})
+  }
+
+  document.querySelectorAll(".switch").forEach(item => {
+    item.addEventListener('change', event => {
+      if(item.checked) {
+        SendGpio(item.id, "on")
+      } else {
+        SendGpio(item.id, "off")
+      }
+    })
+  })
 });

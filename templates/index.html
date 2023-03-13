@@ -35,16 +35,13 @@
         <td id="p3"></td>
       </tr>
     </table>
-    <button class="btn-close btn btn-sm">×</button>
     <div>
-      <div class="button_container"><p>GPIO0</p><button onclick="SendGpio('R0', 'ON')">On</button><button onclick="SendGpio('R0', 'OFF')">OFF</button></div>
-      <div class="button_container"><p>GPIO1</p><button onclick="SendGpio('R1', 'ON')">On</button><button onclick="SendGpio('R1', 'OFF')">OFF</button></div>
+      <div class="button">
+        <p>Solar</p>
+        <label class="toggle">
+        <input id="R0" class="switch" type="checkbox">
+        <span class="roundbutton"></span>
+      </label></div>
     </div>
-    <script>
-      var socket = io.connect();
-      function SendGpio(relay, state) {
-        socket.emit('GPIO', {relay: relay, state: state})
-      }
-    </script>
   </body>
 </html>
