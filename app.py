@@ -20,7 +20,7 @@ def get_current_datetime():
 def background_thread():
     while True:
         dummy_sensor_value = round(random() * 100, 3)
-        socketio.emit('updateSensorData', {'Solar': dummy_sensor_value, "Battery": dummy_sensor_value, "Usage": dummy_sensor_value, "date": get_current_datetime()})
+        socketio.emit('UpdateSensorData', {'Solar': dummy_sensor_value, "Battery": dummy_sensor_value, "Usage": dummy_sensor_value, "date": get_current_datetime()})
         socketio.sleep(5)
 
 
