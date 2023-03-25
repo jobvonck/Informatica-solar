@@ -107,3 +107,32 @@ input:checked + .roundbutton:before  {
 body {
 	background-color: #ebf2f6;
 }
+
+.on {
+  color: green;
+}
+
+.off {
+  color:red;
+}
+
+.card {
+  background-color: white;
+  box-shadow: 0px 0px 25px 1px rgba(50, 50, 50, 0.1);
+  animation: appear 500ms ease-out forwards;
+  border-radius: 20px;
+  padding: 5px;
+  min-width: 200px;
+  width: auto;
+  height: 50px;
+  margin: 5px;
+  display:-webkit-inline-box;
+
+}
+
+.bottom {
+  text-align: center;
+  width: 60%;
+  margin-top: 1%;
+  margin-left: 20%;
+}

@@ -44,4 +44,18 @@ $(document).ready(function () {
     }
     addData(msg.date, msg);
   });
+
+  socket.emit("StartButtons")
+
+  socket.on('UpdateButtons', function (data) {
+    if(data.State =="on") {
+      document.getElementById(data.Relay).classList.add('on');
+      document.getElementById(data.Relay).classList.remove('off');
+      document.getElementById(data.Relay).innerHTML = "aan";
+    } else {
+      document.getElementById(data.Relay).classList.add('off');
+      document.getElementById(data.Relay).classList.remove('on');
+      document.getElementById(data.Relay).innerHTML = "uit";
+    }
+  })
 });
