@@ -1,3 +1,7 @@
+.container {
+  margin: 0;
+}
+
 .toggle {
   margin:0 0 0 2rem;
   position: relative;
@@ -48,8 +52,11 @@ input:checked + .roundbutton:before  {
 .button {
   width: 250px;
   display: -webkit-inline-box;
+  -webkit-box-pack: justify;
   padding: 10px;
   border-style: solid;
+  border-radius: 25px;
+  margin: 1%;
 }
 
 .buttonsgrid {
@@ -57,4 +64,8 @@ input:checked + .roundbutton:before  {
   width:75%;
   margin-left:12.5%;
   margin-top: 5%;
+}
+
+.nav .pagename {
+  width: fit-content;
 }
