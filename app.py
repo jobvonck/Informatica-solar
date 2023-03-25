@@ -3,6 +3,7 @@ from flask_socketio import SocketIO
 from random import random
 from threading import Lock
 from datetime import datetime
+import time
 
 thread = None
 thread_lock = Lock()
@@ -11,7 +12,7 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = "SolarShit"
 socketio = SocketIO(app, cors_allowed_origins="*")
 
-relays = {"R0": 0, "R1": 1, "R2": 1,"R3": 1,"R4": 1,"R5": 1,"R6": 1,"R7": 1}
+relays = {"R0": {"pin" : 17, "state" : "on"}, "R1": {"pin" : 18, "state" : "on"}, "R2": {"pin" : 27, "state" : "on"},"R3": {"pin" : 22, "state" : "on"},"R4": {"pin" : 23, "state" : "on"},"R5": {"pin" : 24, "state" : "on"},"R6": {"pin" : 25, "state" : "on"},"R7": {"pin" : 5, "state" : "on"}}
 
 def get_current_datetime():
     now = datetime.now()
@@ -28,6 +29,9 @@ def background_thread():
 def index():
     return render_template("index.html")
 
+@app.route("/buttons")
+def buttons():
+    return render_template("buttons.html")
 
 @socketio.on("connect")
 def connect():
@@ -40,6 +44,12 @@ def connect():
             thread = socketio.start_background_task(background_thread)
 
 
+@socketio.on("StartButtons")
+def StartButtons():
+    for i in relays:
+        socketio.emit("UpdateButtons", {"Relay": i, "State": relays[i]["state"]})
+
+
 @socketio.on("disconnect")
 def disconnect():
     print("Client disconnected", request.sid)
@@ -47,12 +57,19 @@ def disconnect():
 
 @socketio.on("GPIO")
 def Handle_GPIO(data):
-    print("Client clicked, pin =", relays[data["relay"]], data["state"])
-    pin = relays[data["relay"]]
-    if data["state"] == "ON":
-        print("turning on", pin)
-    elif data["state"] == "OFF":
-        print("turning off", pin)
+    pin = relays[data["relay"]]["pin"]
+    state = relays[data["relay"]]["state"]
+    if state != data["state"]:
+        if data["state"] == "on":
+            print("turning on", pin)
+            relays[data["relay"]]["state"] = "on"
+            socketio.emit("UpdateButtons", {"Relay": data["relay"], "State": "on"})
+        elif data["state"] == "off":
+            print("turning off", pin)
+            relays[data["relay"]]["state"] = "off"
+            socketio.emit("UpdateButtons", {"Relay": data["relay"], "State": "off"})
+    socketio.sleep(10)
+            
 
 
 if __name__ == "__main__":
