@@ -16,12 +16,12 @@ relays = {"R0": {"pin" : 17, "state" : "on"}, "R1": {"pin" : 18, "state" : "on"}
 
 def get_current_datetime():
     now = datetime.now()
-    return now.strftime("%m/%d/%Y %H:%M:%S")
+    return now.strftime("%m/%d/%Y %H:%M:%S").split()[1]
 
 def background_thread():
     while True:
         dummy_sensor_value = round(random() * 100, 3)
-        socketio.emit('UpdateSensorData', {'Solar': dummy_sensor_value, "Battery": dummy_sensor_value, "Usage": dummy_sensor_value, "date": get_current_datetime()})
+        socketio.emit('UpdateSensorData', {'Solar': round(random() * 100, 3), "Battery": round(random() * 100, 3), "Usage": round(random() * 100, 3), "date": get_current_datetime()})
         socketio.sleep(5)
 
 

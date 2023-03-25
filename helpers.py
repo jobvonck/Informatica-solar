@@ -46,4 +46,4 @@ def FrankEnergy():
     return response
 
 def calc_bat(vol):
-    return None
+    return round(vol*75.42-873.4,0)
