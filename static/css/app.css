@@ -1,10 +1,13 @@
 .container {
   margin: auto;
   width: 60%;
+  box-shadow: 0px 0px 25px 1px rgba(50, 50, 50, 0.1);
+  animation: appear 500ms ease-out forwards;
+  border-radius: 25px;
+  background-color: white;
 }
 
 .hero {
-  background: #eee;
   padding: 20px;
   border-radius: 10px;
   margin-top: 1em;
@@ -72,10 +75,14 @@ input:checked + .roundbutton:before  {
   width: 250px;
   display: -webkit-inline-box;
   -webkit-box-pack: justify;
+  margin: 20px 5px;
   padding: 10px;
-  border-style: solid;
-  border-radius: 25px;
-  margin: 1%;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  background-color: white;
+  box-shadow: 0px 0px 25px 1px rgba(50, 50, 50, 0.1);
+  animation: appear 500ms ease-out forwards;
 }
 
 .buttonsgrid {
@@ -83,13 +90,20 @@ input:checked + .roundbutton:before  {
   width:75%;
   margin-left:12.5%;
   margin-top: 5%;
+  text-align: center;
+  border-radius: 25px;
+}
+
+.buttonsgrid h1 {
+  text-align: center;
+  margin: 0;
+  margin-top: 5%;
 }
 
 .nav .pagename {
   width: fit-content;
 }
 
-.odometer {
-  font-size: 5em;
-  margin-top: 3em;
+body {
+	background-color: #ebf2f6;
 }
