@@ -4,6 +4,8 @@ from threading import Lock
 from datetime import datetime
 import time
 from helpers import FrankEnergy, CalcBat, GetWeather
+import RPi.GPIO as GPIO
+from sensor import Sensor
 
 
 thread = None
@@ -27,20 +29,15 @@ relays = {
 
 state = "running"
 if state != "DEBUG":
-    import RPi.GPIO as GPIO
-
-    from sensorTest import TestSensors as sensor
-
     GPIO.setmode(GPIO.BCM)
     for i in relays:
         GPIO.setup(int(relays[i]["pin"]), GPIO.OUT)
         GPIO.output(int(relays[i]["pin"]), GPIO.HIGH)
-else:
-    from sensorTest import TestSensors as sensor
+    #from sensorTest import TestSensors as sensor
 
 stad = "Groningen"
 
-sensor = sensor()
+sensor = Sensor()
 
 
 def get_current_datetime():
@@ -51,6 +48,7 @@ def get_current_datetime():
 def background_thread():
     while True:
         data = sensor.GetData()
+        print(data)
         socketio.emit(
             "UpdateSensorData",
             {

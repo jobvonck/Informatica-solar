@@ -4,7 +4,7 @@ from adafruit_ina219 import ADCResolution, BusVoltageRange, INA219
 from random import random, randrange
 
 
-class Sensors:
+class Sensor:
     def __init__(self):
         self.i2c = busio.I2C(board.SCL, board.SDA)
         self.sensor1 = INA219(self.i2c, 0x40)
