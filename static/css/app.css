@@ -1,10 +1,10 @@
 .container {
   margin: auto;
-  width: 60%;
   box-shadow: 0px 0px 25px 1px rgba(50, 50, 50, 0.1);
   animation: appear 500ms ease-out forwards;
   border-radius: 25px;
   background-color: white;
+  width: 100%
 }
 
 .hero {
@@ -17,10 +17,11 @@
   margin-top: 0;
   margin-bottom: 0.3em;
   text-align: center;
+  font-size: 30px;
 }
 
 .chart-container {
-  max-width: 75%;
+  max-width: 90%;
   margin: 0 auto;
 }
 
@@ -132,7 +133,44 @@ body {
 
 .bottom {
   text-align: center;
-  width: 60%;
-  margin-top: 1%;
-  margin-left: 20%;
+  margin: auto;
+}
+
+.bottom h2 {
+  margin: 0;
+  margin-top: 2%;
+  font-size: 20px;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: [first] 25% [line2] 50% [line3] 25%;
+}
+
+@media screen and (max-width:1000px) {
+  .container {
+    width: 100%;
+  }
+  .hero h1 {
+    font-size: 15px;
+  }
+  .bottom{
+    width: 80%;
+  }
+  .chart-container {
+    max-width: 95%;
+  }
+  .main {
+    display: block;
+  }
+}
+
+@media screen and (max-width:500px) {
+  .card {
+    min-width: 100px;
+    height: auto;
+  }
+  .card p {
+    font-size: 10px;
+  }
 }
