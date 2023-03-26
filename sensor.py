@@ -7,8 +7,8 @@ from random import random, randrange
 class Sensors:
     def __init__(self):
         self.i2c = busio.I2C(board.SCL, board.SDA)
-        self.sensor1 = INA219(self.i2c)
-        self.sensor2 = INA219(self.i2c)
+        self.sensor1 = INA219(self.i2c, 0x40)
+        self.sensor2 = INA219(self.i2c, 0x41)
 
         self.sensor1.bus_adc_resolution = ADCResolution.ADCRES_12BIT_32S
         self.sensor1.shunt_adc_resolution = ADCResolution.ADCRES_12BIT_32S
