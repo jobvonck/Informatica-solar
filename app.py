@@ -4,7 +4,14 @@ from threading import Lock
 from datetime import datetime
 import time
 from helpers import FrankEnergy, CalcBat, GetWeather
-from sensorTest import TestSensors as sensor
+
+
+state = "DEBUG"
+if state != "DEBUG":
+    import GPIO
+    from sensorTest import sensor
+else:
+    from sensorTest import TestSensors as sensor
 
 sensor = sensor()
 
@@ -41,11 +48,11 @@ def background_thread():
         socketio.emit(
             "UpdateSensorData",
             {
-                "Solar": data['Power2'],
-                "Battery": data['Power1'],
-                "Usage": data['Usage'],
+                "Solar": data["Power2"],
+                "Battery": data["Power1"],
+                "Usage": data["Usage"],
                 "Price": FrankEnergy(),
-                "Charge": CalcBat(data['BatteryVoltage']),
+                "Charge": CalcBat(data["BatteryVoltage"]),
                 "date": get_current_datetime(),
             },
         )
@@ -65,12 +72,13 @@ def buttons():
 @socketio.on("connect")
 def connect():
     global thread
-    print('Client connected')
+    print("Client connected")
 
     global thread
     with thread_lock:
         if thread is None:
             thread = socketio.start_background_task(background_thread)
+
 
 @socketio.on("StartButtons")
 def StartButtons():
