@@ -1,9 +1,10 @@
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO
-from random import random
+from random import random, randrange
 from threading import Lock
 from datetime import datetime
 import time
+from helpers import FrankEnergy, CalcBat
 
 
 thread = None
@@ -33,13 +34,15 @@ def get_current_datetime():
 
 def background_thread():
     while True:
-        dummy_sensor_value = round(random() * 100, 3)
         socketio.emit(
             "UpdateSensorData",
             {
                 "Solar": round(random() * 100, 3),
                 "Battery": round(random() * 100, 3),
                 "Usage": round(random() * 100, 3),
+                "BatteryCharge": round(random() * 100, 3),
+                "Price": FrankEnergy(),
+                "Charge": CalcBat(round(randrange(1163, 1289) / 100, 3)),
                 "date": get_current_datetime(),
             },
         )
@@ -58,7 +61,13 @@ def buttons():
 
 @socketio.on("connect")
 def connect():
-    print("Client connected")
+    global thread
+    print('Client connected')
+
+    global thread
+    with thread_lock:
+        if thread is None:
+            thread = socketio.start_background_task(background_thread)
 
 
 @socketio.on("StartButtons")
@@ -95,5 +104,4 @@ def test(name):
 
 
 if __name__ == "__main__":
-    socketio.start_background_task(background_thread)
     socketio.run(app)

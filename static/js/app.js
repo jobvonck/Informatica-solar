@@ -36,7 +36,10 @@ $(document).ready(function () {
 
   //receive details from server
   socket.on("UpdateSensorData", function (msg) {
-    console.log("Received sensorData :: " + msg.date + " :: " + msg.value);
+    console.log(msg);
+    document.getElementById("mprice").innerHTML = "€" + msg.Price[0];
+    document.getElementById("price").innerHTML = "€" + msg.Price[1];
+    document.getElementById("charge").innerHTML = msg.Charge;
 
     // Show only MAX_DATA_COUNT data
     if (myChart.data.labels.length > MAX_DATA_COUNT) {

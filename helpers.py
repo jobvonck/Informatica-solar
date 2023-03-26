@@ -1,5 +1,5 @@
 import requests
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import csv
 from dateutil import parser
 
@@ -7,15 +7,14 @@ from dateutil import parser
 def FrankEnergy():
     now = datetime.now()
 
-    yesterday = datetime.now() + timedelta(days=-1)
-    startdate = yesterday.strftime("%Y-%m-%d")
-    enddate = now.strftime("%Y-%m-%d")
-
+    startdate = now.strftime("%Y-%m-%d")
+    enddate = datetime.now() + timedelta(days=+1)
+    enddate = enddate.strftime("%Y-%m-%d")
+ 
     if int(now.strftime("%H")) > 15:
         tomorrow = datetime.now() + timedelta(days=2)
         startdate = now.strftime("%Y-%m-%d")
         enddate = tomorrow.strftime("%Y-%m-%d")
-
     headers = {"content-type": "application/json"}
 
     query = {
@@ -36,15 +35,18 @@ def FrankEnergy():
     response = requests.post("https://frank-graphql-prod.graphcdn.app/", json=query)
     data = response.json()
 
-    response = []
+    response = requests.post('https://frank-graphql-prod.graphcdn.app', json=query)
+    data = response.json()
+ 
+    for electra in data['data']['marketPricesElectricity']:
+        #print(round(electra["marketPrice"] + electra["marketPriceTax"] + electra["sourcingMarkupPrice"] + electra["energyTaxPrice"],4))
+        #print(electra["marketPrice"])
+        #print(electra)
+        if parser.parse(electra["from"]) <= datetime.now(timezone.utc) <= parser.parse(electra["till"]):
+            totalPrice = round(electra["marketPrice"] + electra["marketPriceTax"] + electra["sourcingMarkupPrice"] + electra["energyTaxPrice"],4)
+            marketPrice = electra["marketPrice"]
+            return [totalPrice,marketPrice]
 
-    for item in data["data"]["marketPricesElectricity"]:
-        item["from"] = parser.parse(item["from"])
-        item.pop("till")
-        response.append(item)
 
-    return response
-
-
-def calc_bat(vol):
+def CalcBat(vol):
     return round(vol * 75.42 - 873.4, 0)

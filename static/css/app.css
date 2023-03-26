@@ -26,7 +26,7 @@
 }
 
 .toggle {
-  margin:0 0 0 2rem;
+  margin: 0 0 0 2rem;
   position: relative;
   display: inline-block;
   width: 6rem;
@@ -64,11 +64,11 @@
   transition: all 0.3s;
 }
 
-input:checked + .roundbutton {
+input:checked+.roundbutton {
   background-color: #FF6E48;
 }
 
-input:checked + .roundbutton:before  {
+input:checked+.roundbutton:before {
   transform: translate(2.6rem, 0);
 }
 
@@ -88,8 +88,8 @@ input:checked + .roundbutton:before  {
 
 .buttonsgrid {
   display: block;
-  width:40%;
-  margin-left:30%;
+  width: 40%;
+  margin-left: 30%;
   margin-top: 5%;
   text-align: center;
   border-radius: 25px;
@@ -106,7 +106,7 @@ input:checked + .roundbutton:before  {
 }
 
 body {
-	background-color: #ebf2f6;
+  background-color: #ebf2f6;
 }
 
 .on {
@@ -114,7 +114,7 @@ body {
 }
 
 .off {
-  color:red;
+  color: red;
 }
 
 .card {
@@ -127,10 +127,10 @@ body {
   width: auto;
   height: 50px;
   margin: 5px;
-  display:-webkit-inline-box;
+  display: -webkit-inline-box;
 }
 
-.side-card{
+.side-card {
   background-color: white;
   box-shadow: 0px 0px 25px 1px rgba(50, 50, 50, 0.1);
   animation: appear 500ms ease-out forwards;
@@ -155,19 +155,49 @@ body {
   grid-template-columns: [first] 25% [line2] 50% [line3] 25%;
 }
 
+.prijzen h1, .batterij h1{
+  margin: 0;
+  text-align: center;
+  font-size: 35px;
+}
+
+.prijs p, .batterij p {
+  margin: 0;
+  font-size: 20px;
+  width: 50%;
+}
+
+.percentage {
+  display: flex;
+}
+
+.percentage p {
+  font-size: 50px;
+}
+
+.prijs {
+  margin: 2%;
+}
+
 @media screen and (max-width:1000px) {
   .container {
-    width: 100%;
+    width: auto;
+    margin: 1em;
   }
+
   .hero h1 {
     font-size: 15px;
   }
-  .bottom{
-    width: 80%;
+
+  .bottom {
+    width: auto;
+    margin: 1em;
   }
+
   .chart-container {
     max-width: 95%;
   }
+
   .main {
     display: block;
   }
@@ -182,6 +212,7 @@ body {
     min-width: 100px;
     height: auto;
   }
+
   .card p {
     font-size: 10px;
   }
