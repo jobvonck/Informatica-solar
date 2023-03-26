@@ -36,16 +36,28 @@ $(document).ready(function () {
 
   //receive details from server
   socket.on("UpdateSensorData", function (msg) {
-    console.log(msg);
     document.getElementById("mprice").innerHTML = "€" + msg.Price[0];
     document.getElementById("price").innerHTML = "€" + msg.Price[1];
-    document.getElementById("charge").innerHTML = msg.Charge;
+    document.getElementById("charge").innerHTML = msg.Charge + "<sup>%</sup>";
+
+    if (msg.Charge < 20) {
+      document.getElementById("charge").classList.add('off');
+    } else {
+      document.getElementById("charge").classList.remove('off');
+    }
 
     // Show only MAX_DATA_COUNT data
     if (myChart.data.labels.length > MAX_DATA_COUNT) {
       removeFirstData();
     }
     addData(msg.date, msg);
+  });
+
+  socket.on("GetWeather", function (msg) {
+    const icon = "http://openweathermap.org/img/w/" + msg.weather[0]["icon"] + ".png"
+    const data = `<h2 class="city-name" data-name="${msg.name},${msg.sys.country}"><span>${msg.name}</span><sup>${msg.sys.country}</sup></h2><div class="city-temp">${Math.round(msg.main.temp)}<sup>°C</sup></div><figure><img class="city-icon" src="${icon}" alt="${msg.weather[0]["description"]}"><figcaption>${msg.weather[0]["description"]}</figcaption></figure>`;
+    document.getElementById("weer").innerHTML = data;
+
   });
 
   socket.emit("StartButtons")

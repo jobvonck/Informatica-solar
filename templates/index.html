@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Real Time Sensor Display Using Python, Flask, Flask-SocketIO</title>
+  <title>Solar dashboard</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"
     integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ=="
     crossorigin="anonymous"></script>
@@ -36,7 +36,7 @@
         </div>
         <div class="batterij">
           <h1>Batterij</h1>
-          <div class="percentage"><p id="charge" style="text-align: end;">0</p><p>%</p></div>
+          <div class="percentage" id="charge">0<sup>%</sup></div>
         </div>
       </div>
     </div>
@@ -87,7 +87,8 @@
     </div>
     <div class="right">
       <div class="side-card">
-        <h1>Weather</h1>
+        <div id="weer">
+        </div>
       </div>
     </div>
   </div>

@@ -1,7 +1,7 @@
 import requests
 from datetime import datetime, timedelta, timezone
-import csv
 from dateutil import parser
+import json
 
 # terug leveren https://www.frankenergie.nl/saldering-bij-dynamische-contracten
 def FrankEnergy():
@@ -49,4 +49,16 @@ def FrankEnergy():
 
 
 def CalcBat(vol):
-    return round(vol * 75.42 - 873.4, 0)
+    battery = round(vol * 75.42 - 873.4, 0)
+    if battery >100:
+        battery = 100
+    elif battery < 0:
+        battery = 0
+    return battery
+
+def GetWeather(stad):
+    api_key = "4d8fb5b93d4af21d66a2948710284366"
+    url = "https://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s&units=metric" % (stad, api_key)
+    response = requests.get(url)
+    data = json.loads(response.text)
+    return data

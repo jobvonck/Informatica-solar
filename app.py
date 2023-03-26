@@ -1,11 +1,12 @@
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO
-from random import random, randrange
 from threading import Lock
 from datetime import datetime
 import time
-from helpers import FrankEnergy, CalcBat
+from helpers import FrankEnergy, CalcBat, GetWeather
+from sensorTest import TestSensors as sensor
 
+sensor = sensor()
 
 thread = None
 thread_lock = Lock()
@@ -26,6 +27,8 @@ relays = {
     "R7": {"pin": 5, "state": "on"},
 }
 
+stad = "Groningen"
+
 
 def get_current_datetime():
     now = datetime.now()
@@ -34,15 +37,15 @@ def get_current_datetime():
 
 def background_thread():
     while True:
+        data = sensor.GetData()
         socketio.emit(
             "UpdateSensorData",
             {
-                "Solar": round(random() * 100, 3),
-                "Battery": round(random() * 100, 3),
-                "Usage": round(random() * 100, 3),
-                "BatteryCharge": round(random() * 100, 3),
+                "Solar": data['Power2'],
+                "Battery": data['Power1'],
+                "Usage": data['Usage'],
                 "Price": FrankEnergy(),
-                "Charge": CalcBat(round(randrange(1163, 1289) / 100, 3)),
+                "Charge": CalcBat(data['BatteryVoltage']),
                 "date": get_current_datetime(),
             },
         )
@@ -69,9 +72,9 @@ def connect():
         if thread is None:
             thread = socketio.start_background_task(background_thread)
 
-
 @socketio.on("StartButtons")
 def StartButtons():
+    socketio.emit("GetWeather", GetWeather(stad))
     for i in relays:
         socketio.emit("UpdateButtons", {"Relay": i, "State": relays[i]["state"]})
 

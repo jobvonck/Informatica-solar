@@ -1,3 +1,13 @@
+:root {
+  --bg_main: #0a1f44;
+  --text_light: #fff;
+  --text_med: #53627c;
+  --text_dark: #1e2432;
+  --red: #ff1e42;
+  --darkred: #c3112d;
+  --orange: #ff8c00;
+}
+
 .container {
   margin: auto;
   box-shadow: 0px 0px 25px 1px rgba(50, 50, 50, 0.1);
@@ -117,6 +127,10 @@ body {
   color: red;
 }
 
+#weer{
+  text-align: center;
+}
+
 .card {
   background-color: white;
   box-shadow: 0px 0px 25px 1px rgba(50, 50, 50, 0.1);
@@ -168,15 +182,69 @@ body {
 }
 
 .percentage {
-  display: flex;
-}
-
-.percentage p {
-  font-size: 50px;
+  text-align: center;
+  font-size: 40px;
 }
 
 .prijs {
   margin: 2%;
+}
+
+.batterijAlarm{
+  display: none;
+  height: 20px;
+  text-align: center;
+}
+
+.city {
+  position: relative;
+  padding: 40px 10%;
+  border-radius: 20px;
+  background: var(--text_light);
+  color: var(--text_med);
+}
+
+.city::after {
+  content: '';
+  width: 90%;
+  height: 50px;
+  position: absolute;
+  bottom: -12px;
+  left: 5%;
+  z-index: -1;
+  opacity: 0.3;
+  border-radius: 20px;
+  background: var(--text_light);
+}
+
+figcaption {
+  margin-top: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.city-temp {
+  font-size: 5rem;
+  font-weight: bold;
+  margin-top: 10px;
+  color: var(--text_dark);
+}
+
+.city sup {
+  font-size: 0.5em;
+}
+
+.city-name sup {
+  padding: 0.2em 0.6em;
+  border-radius: 30px;
+  color: var(--text_light);
+  background: var(--orange);
+}
+
+.city-icon {
+  margin-top: 10px;
+  width: 100px;
+  height: 100px;
 }
 
 @media screen and (max-width:1000px) {
@@ -204,6 +272,7 @@ body {
 
   .buttonsgrid {
     width: 90%;
+    margin: 1em;
   }
 }
 
