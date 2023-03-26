@@ -6,15 +6,6 @@ import time
 from helpers import FrankEnergy, CalcBat, GetWeather
 
 
-state = "DEBUG"
-if state != "DEBUG":
-    import GPIO
-    from sensorTest import sensor
-else:
-    from sensorTest import TestSensors as sensor
-
-sensor = sensor()
-
 thread = None
 thread_lock = Lock()
 
@@ -24,18 +15,31 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 
 
 relays = {
-    "R0": {"pin": 17, "state": "on"},
-    "R1": {"pin": 18, "state": "on"},
-    "R2": {"pin": 27, "state": "on"},
-    "R3": {"pin": 22, "state": "on"},
-    "R4": {"pin": 23, "state": "on"},
-    "R5": {"pin": 24, "state": "on"},
-    "R6": {"pin": 25, "state": "on"},
-    "R7": {"pin": 5, "state": "on"},
+    "R0": {"pin": 17, "state": "off"},
+    "R1": {"pin": 18, "state": "off"},
+    "R2": {"pin": 27, "state": "off"},
+    "R3": {"pin": 22, "state": "off"},
+    "R4": {"pin": 23, "state": "off"},
+    "R5": {"pin": 24, "state": "off"},
+    "R6": {"pin": 25, "state": "off"},
+    "R7": {"pin": 5, "state": "off"},
 }
+
+state = "running"
+if state != "DEBUG":
+    import RPi.GPIO as GPIO
+
+    from sensorTest import TestSensors as sensor
+    GPIO.setmode(GPIO.BCM)
+    for i in relays:
+        GPIO.setup(int(relays[i]["pin"]), GPIO.OUT)
+        GPIO.output(int(relays[i]["pin"]), GPIO.HIGH)
+else:
+    from sensorTest import TestSensors as sensor
 
 stad = "Groningen"
 
+sensor = sensor()
 
 def get_current_datetime():
     now = datetime.now()
@@ -94,25 +98,22 @@ def disconnect():
 
 @socketio.on("GPIO")
 def Handle_GPIO(data):
-    pin = relays[data["relay"]]["pin"]
+    pin = int(relays[data["relay"]]["pin"])
     state = relays[data["relay"]]["state"]
     if state != data["state"]:
         if data["state"] == "on":
             print("turning on", pin)
+            GPIO.output(pin, GPIO.LOW)
             relays[data["relay"]]["state"] = "on"
             socketio.emit("UpdateButtons", {"Relay": data["relay"], "State": "on"})
         elif data["state"] == "off":
             print("turning off", pin)
+            GPIO.output(pin, GPIO.HIGH)
             relays[data["relay"]]["state"] = "off"
             socketio.emit("UpdateButtons", {"Relay": data["relay"], "State": "off"})
     socketio.sleep(10)
 
 
-def test(name):
-    while True:
-        print("test")
-        time.sleep(1)
-
-
 if __name__ == "__main__":
     socketio.run(app)
+    GPIO.cleanup()
