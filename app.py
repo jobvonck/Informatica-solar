@@ -30,6 +30,7 @@ if state != "DEBUG":
     import RPi.GPIO as GPIO
 
     from sensorTest import TestSensors as sensor
+
     GPIO.setmode(GPIO.BCM)
     for i in relays:
         GPIO.setup(int(relays[i]["pin"]), GPIO.OUT)
@@ -40,6 +41,7 @@ else:
 stad = "Groningen"
 
 sensor = sensor()
+
 
 def get_current_datetime():
     now = datetime.now()
