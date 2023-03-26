@@ -6,7 +6,7 @@ $(document).ready(function () {
   const myChart = new Chart(ctx, {
     type: "line",
     data: {
-      datasets: [{ label: "Solar",  borderColor: '#96C3CE', backgroundColor: '#96C3CE',}, { label: "Batterij",borderColor: '#4BC6B9', backgroundColor: '#4BC6B9',}, {label:"Gebruik", borderColor: '#A79AB2', backgroundColor: '#A79AB2',}],
+      datasets: [{ label: "Solar", borderColor: '#96C3CE', backgroundColor: '#96C3CE', }, { label: "Batterij", borderColor: '#4BC6B9', backgroundColor: '#4BC6B9', }, { label: "Gebruik", borderColor: '#A79AB2', backgroundColor: '#A79AB2', }],
     },
     options: {
       borderWidth: 3,
@@ -48,7 +48,7 @@ $(document).ready(function () {
   socket.emit("StartButtons")
 
   socket.on('UpdateButtons', function (data) {
-    if(data.State =="on") {
+    if (data.State == "on") {
       document.getElementById(data.Relay).classList.add('on');
       document.getElementById(data.Relay).classList.remove('off');
       document.getElementById(data.Relay).innerHTML = "aan";
