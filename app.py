@@ -33,7 +33,7 @@ if state != "DEBUG":
     for i in relays:
         GPIO.setup(int(relays[i]["pin"]), GPIO.OUT)
         GPIO.output(int(relays[i]["pin"]), GPIO.HIGH)
-    #from sensorTest import TestSensors as sensor
+    # from sensorTest import TestSensors as sensor
 
 stad = "Groningen"
 
@@ -48,6 +48,7 @@ def get_current_datetime():
 def background_thread():
     while True:
         data = sensor.GetData()
+        charge = CalcBat(data["BatteryVoltage"])
         print(data)
         socketio.emit(
             "UpdateSensorData",
@@ -56,7 +57,7 @@ def background_thread():
                 "Battery": data["Power1"],
                 "Usage": data["Usage"],
                 "Price": FrankEnergy(),
-                "Charge": CalcBat(data["BatteryVoltage"]),
+                "Charge": charge,
                 "date": get_current_datetime(),
             },
         )
