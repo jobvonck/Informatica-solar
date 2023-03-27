@@ -114,7 +114,7 @@ $(document).ready(function () {
   const PriceChart = new Chart(PChart, {
     type: "line",
     data: {
-      datasets: [{ label: "Marktprijs", borderColor: '#96C3CE', backgroundColor: '#96C3CE', }, { label: "Totaal", borderColor: '#4BC6B9', backgroundColor: '#4BC6B9', }],
+      datasets: [{ label: "Totaal", borderColor: '#96C3CE', backgroundColor: '#96C3CE', }, { label: "Marktprijs", borderColor: '#4BC6B9', backgroundColor: '#4BC6B9', }],
     },
     options: {
       borderWidth: 3,
