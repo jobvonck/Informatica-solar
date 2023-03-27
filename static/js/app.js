@@ -135,4 +135,13 @@ $(document).ready(function () {
 
     PriceChart.update();
   })
+
+  socket.on('DataGraph', function (data) {
+    console.log(data);
+    myChart.data.labels = data.date;
+    myChart.data.datasets[0].data = data.Solar;
+    myChart.data.datasets[1].data = data.Battery;
+    myChart.data.datasets[2].data = data.Usage;
+    myChart.update();
+  })
 });

@@ -10,6 +10,7 @@ from sensorTest import TestSensors as Sensor
 # from sensor import Sensor
 
 lastPrice = []
+lastSensorData = {"date": [],"Solar": [], "Battery": [], "Usage": []}
 
 
 thread = None
@@ -68,6 +69,15 @@ def background_thread():
                 "date": get_current_datetime(),
             },
         )
+
+        if len(lastSensorData) >= 50:
+            if i in lastSensorData:
+                lastSensorData[i].pop(0)
+        lastSensorData['date'].append(get_current_datetime())
+        lastSensorData['Solar'].append(data["SolarPower"])
+        lastSensorData['Battery'].append(data["BatteryPower"])
+        lastSensorData['Usage'].append(data["Usage"])
+
         minCharge = 20
         maxCharge = 90
         if (CheckPrice() and relays["R7"]["state"] != "on" and charge > minCharge) or (charge > maxCharge and relays["R7"]["state"] != "on"):
@@ -113,6 +123,7 @@ def StartButtons():
     socketio.emit("UpdatePrice", FrankEnergy()[2])
     for i in relays:
         socketio.emit("UpdateButtons", {"Relay": i, "State": relays[i]["state"]})
+    socketio.emit("DataGraph", lastSensorData)
 
 
 @socketio.on("disconnect")
