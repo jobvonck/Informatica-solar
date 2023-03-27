@@ -3,7 +3,7 @@ from flask_socketio import SocketIO
 from threading import Lock
 from datetime import datetime
 import time
-from helpers import FrankEnergy, CalcBat, GetWeather, GetHighestPrice
+from helpers import FrankEnergy, CalcBat, GetWeather, GetHighestPrice, CheckPrice
 from sensorTest import TestSensors as Sensor
 
 # import RPi.GPIO as GPIO
@@ -68,9 +68,20 @@ def background_thread():
                 "date": get_current_datetime(),
             },
         )
-
-        print(GetHighestPrice())
-
+        minCharge = 20
+        maxCharge = 90
+        if (CheckPrice() and relays["R7"]["state"] != "on" and charge > minCharge) or (charge > maxCharge and relays["R7"]["state"] != "on"):
+            pin = int(relays["R7"]["pin"])
+            # GPIO.output(pin, GPIO.LOW)
+            relays["R7"]["state"] = "on"
+            socketio.emit("UpdateButtons", {"Relay": "R7", "State": "on"})
+            print("Stroomteruglevering aan")
+        elif (CheckPrice() and charge <= minCharge and relays["R7"]["state"] != "off") or (charge <= maxCharge and relays["R7"]["state"] != "off"):
+            pin = int(relays["R7"]["pin"])
+            # GPIO.output(pin, GPIO.HIGH)
+            relays["R7"]["state"] = "off"
+            socketio.emit("UpdateButtons", {"Relay":"R7", "State": "off"})
+            print("Stroomteruglevering uit")
 
         socketio.sleep(5)
 

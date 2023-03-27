@@ -9,16 +9,16 @@ $(document).ready(function () {
     const s = now.getSeconds();
 
     var today = new Date();
-    var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
-  
-  // Defining html for digital clock
-    const html = 
-    `<h1 style="text-align:center; margin-bottom:0;">
+    var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
+
+    // Defining html for digital clock
+    const html =
+      `<h1 style="text-align:center; margin-bottom:0;">
     <span>${("0" + h).slice(-2)}</span> : 
     <span>${("0" + m).slice(-2)}</span> : 
     <span>${("0" + s).slice(-2)}</span></h1>
     <p style="text-align:center;">${date}</p>
-    `; 
+    `;
 
     //printing html code inside div.clock
     clock.innerHTML = html;

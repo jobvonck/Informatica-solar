@@ -93,3 +93,16 @@ def GetWeather(stad):
     response = requests.get(url)
     data = json.loads(response.text)
     return data
+
+
+def CheckPrice():
+    response = GetHighestPrice()
+
+    now = datetime.now()
+    now = now.strftime("%H:%M:%S")
+    time = datetime.strptime(response[0], "%H:%M:%S")
+    now = datetime.strptime(now, "%H:%M:%S")
+    if now > time and now < time + timedelta(hours=1):
+        return True
+    else:
+        return False
