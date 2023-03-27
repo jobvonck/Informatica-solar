@@ -57,7 +57,7 @@ $(document).ready(function () {
     });
   }
 
-  const MAX_DATA_COUNT = 10;
+  const MAX_DATA_COUNT = 50;
   //connect to the socket server.
   //   var socket = io.connect("http://" + document.domain + ":" + location.port);
   var socket = io.connect();

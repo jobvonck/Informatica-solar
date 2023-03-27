@@ -83,7 +83,7 @@ def background_thread():
             socketio.emit("UpdateButtons", {"Relay":"R7", "State": "off"})
             print("Stroomteruglevering uit")
 
-        socketio.sleep(5)
+        socketio.sleep(2)
 
 
 @app.route("/")
