@@ -27,7 +27,7 @@
   </nav>
   <div class="main">
     <div class="left">
-      <div class="side-card">
+      <div class="side-card ClockCard">
         <div class="clock"></div>
       </div>
       <div class="side-card">
@@ -42,14 +42,10 @@
             </p>
             <p id="price">0</p>
           </div>
-          <h6 style="margin:2%;"><a href="https://www.frankenergie.nl/" style="color: gray;">Uurprijs @frankenergie</a>
-            </h3>
-        </div>
-      </div>
-      <div class="side-card">
-        <div class="batterij">
-          <h1>Batterij</h1>
-          <div class="percentage" id="charge">0<sup>%</sup></div>
+          <div class="PriceChart">
+            <canvas id="PriceChart"></canvas>
+          </div>
+          <h6 style="margin:2%;"><a href="https://www.frankenergie.nl/" style="color: gray;">Uurprijs @frankenergie</a></h3>
         </div>
       </div>
     </div>
@@ -99,6 +95,12 @@
       </div>
     </div>
     <div class="right">
+      <div class="side-card">
+        <div class="batterij">
+          <h1>Batterij</h1>
+          <div class="percentage" id="charge">0<sup>%</sup></div>
+        </div>
+      </div>
       <div class="side-card">
         <div class="stroom">
           <h1>Stroom</h1>

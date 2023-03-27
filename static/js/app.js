@@ -14,9 +14,9 @@ $(document).ready(function () {
   // Defining html for digital clock
     const html = 
     `<h1 style="text-align:center; margin-bottom:0;">
-    <span>${h}</span> : 
-    <span>${m}</span> : 
-    <span>${s}</span></h1>
+    <span>${("0" + h).slice(-2)}</span> : 
+    <span>${("0" + m).slice(-2)}</span> : 
+    <span>${("0" + s).slice(-2)}</span></h1>
     <p style="text-align:center;">${date}</p>
     `; 
 
@@ -107,5 +107,32 @@ $(document).ready(function () {
       document.getElementById(data.Relay).classList.remove('on');
       document.getElementById(data.Relay).innerHTML = "uit";
     }
+  })
+
+  const PChart = document.getElementById('PriceChart');
+
+  const PriceChart = new Chart(PChart, {
+    type: "line",
+    data: {
+      datasets: [{ label: "Marktprijs", borderColor: '#96C3CE', backgroundColor: '#96C3CE', }, { label: "Totaal", borderColor: '#4BC6B9', backgroundColor: '#4BC6B9', }],
+    },
+    options: {
+      borderWidth: 3,
+      borderColor: ['rgba(255, 99, 132, 1)',],
+    },
+  });
+
+  socket.on('UpdatePrice', function (data) {
+    PriceChart.data.labels.length = 0;
+    PriceChart.data.datasets[0].length = 0;
+    PriceChart.data.datasets[1].length = 0;
+
+    data.forEach((element) => {
+      PriceChart.data.labels.push(element[0]);
+      PriceChart.data.datasets[0].data.push(element[1]);
+      PriceChart.data.datasets[1].data.push(element[2]);
+    });
+
+    PriceChart.update();
   })
 });

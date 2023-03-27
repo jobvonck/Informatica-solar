@@ -187,6 +187,11 @@ body {
 .percentage {
   text-align: center;
   font-size: 40px;
+  border-radius: 25px;
+  background-color: #ebf2f6;
+  margin: auto;
+  width: 25%;
+  padding: 5px;
 }
 
 .prijs {
@@ -265,6 +270,15 @@ td {
   border-radius: 25px;
 }
 
+.clock {
+  height: 122.6px;
+  animation: appear 500ms ease-out forwards;
+}
+
+.ClockCard {
+  height: 161.75px;
+}
+
 @media screen and (max-width:1000px) {
   .container {
     width: auto;
@@ -280,7 +294,7 @@ td {
     margin: 1em;
   }
 
-  .chart-container {
+  .chart-container, .PriceChart {
     max-width: 95%;
   }
 

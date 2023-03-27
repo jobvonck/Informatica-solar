@@ -99,6 +99,7 @@ def connect():
 @socketio.on("StartButtons")
 def StartButtons():
     socketio.emit("GetWeather", GetWeather(stad))
+    socketio.emit("UpdatePrice", FrankEnergy()[2])
     for i in relays:
         socketio.emit("UpdateButtons", {"Relay": i, "State": relays[i]["state"]})
 
