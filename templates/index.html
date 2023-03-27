@@ -28,6 +28,9 @@
   <div class="main">
     <div class="left">
       <div class="side-card">
+        <div class="clock"></div>
+      </div>
+      <div class="side-card">
         <div class="prijzen">
           <h1>Stroomprijs</h1>
           <div class="prijs">
@@ -42,6 +45,8 @@
           <h6 style="margin:2%;"><a href="https://www.frankenergie.nl/" style="color: gray;">Uurprijs @frankenergie</a>
             </h3>
         </div>
+      </div>
+      <div class="side-card">
         <div class="batterij">
           <h1>Batterij</h1>
           <div class="percentage" id="charge">0<sup>%</sup></div>
@@ -94,6 +99,27 @@
       </div>
     </div>
     <div class="right">
+      <div class="side-card">
+        <div class="stroom">
+          <h1>Stroom</h1>
+          <table class="table">
+            <tbody>
+              <tr>
+                <td style="text-align: left; border-radius: 25px 0 0 0;">Batterij</td>
+                <td id="BatteryVoltage">0 V</td>
+                <td id="BatteryCurrent">0 A</td>
+                <td id="BatteryPower" style="border-radius: 0 25px 0 0;">0 W</td>
+              </tr>
+              <tr>
+                <td style="text-align: left;">Zonnepaneel</td>
+                <td id="SolarVoltage">0 V</td>
+                <td id="SolarCurrent">0 A</td>
+                <td id="SolarPower">0 W</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
       <div class="side-card">
         <div id="weer">
         </div>

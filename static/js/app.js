@@ -1,4 +1,32 @@
 $(document).ready(function () {
+  const clock = document.querySelector('.clock');
+
+  // Assigning time values to constants 
+  const tick = () => {
+    const now = new Date();
+    let h = now.getHours();
+    const m = now.getMinutes();
+    const s = now.getSeconds();
+
+    var today = new Date();
+    var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+  
+  // Defining html for digital clock
+    const html = 
+    `<h1 style="text-align:center; margin-bottom:0;">
+    <span>${h}</span> : 
+    <span>${m}</span> : 
+    <span>${s}</span></h1>
+    <p style="text-align:center;">${date}</p>
+    `; 
+
+    //printing html code inside div.clock
+    clock.innerHTML = html;
+  };
+
+  //refreshing clock every 1 second
+  setInterval(tick, 1000);
+
   var socket = io.connect();
 
   const ctx = document.getElementById("myChart").getContext("2d");
@@ -39,6 +67,13 @@ $(document).ready(function () {
     document.getElementById("mprice").innerHTML = "€" + msg.Price[0];
     document.getElementById("price").innerHTML = "€" + msg.Price[1];
     document.getElementById("charge").innerHTML = msg.Charge + "<sup>%</sup>";
+
+    document.getElementById("BatteryVoltage").innerHTML = msg.BatteryVoltage + " V";
+    document.getElementById("SolarVoltage").innerHTML = msg.SolarVoltage + " V";
+    document.getElementById("BatteryCurrent").innerHTML = msg.BatteryCurrent + " A";
+    document.getElementById("SolarCurrent").innerHTML = msg.SolarCurrent + " A";
+    document.getElementById("SolarPower").innerHTML = msg.Solar + " W";
+    document.getElementById("BatteryPower").innerHTML = msg.Battery + " W";
 
     if (msg.Charge < 20) {
       document.getElementById("charge").classList.add('off');

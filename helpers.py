@@ -52,7 +52,27 @@ def FrankEnergy():
                 4,
             )
             marketPrice = electra["marketPrice"]
-            return [totalPrice, marketPrice]
+
+    prices = []
+    for i in data["data"]["marketPricesElectricity"]:
+        time = parser.parse(i["from"]).replace(tzinfo=None) + timedelta(hours=2)
+        time = str(time).split()[1]
+        totalPrice = round(
+            i["marketPrice"]
+            + i["marketPriceTax"]
+            + i["sourcingMarkupPrice"]
+            + i["energyTaxPrice"],
+            4,
+        )
+        marketPrice = i["marketPrice"]
+        prices.append(([time, totalPrice, marketPrice]))
+
+    return [totalPrice, marketPrice, prices]
+
+
+def GetHighestPrice():
+    prices = FrankEnergy()[2]
+    return max(prices, key=lambda x: x[1])
 
 
 def CalcBat(vol):
