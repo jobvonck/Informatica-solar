@@ -4,10 +4,10 @@ from threading import Lock
 from datetime import datetime
 import time
 from helpers import FrankEnergy, CalcBat, GetWeather, GetHighestPrice, CheckPrice
-from sensorTest import TestSensors as Sensor
+# from sensorTest import TestSensors as Sensor
 
-# import RPi.GPIO as GPIO
-# from sensor import Sensor
+import RPi.GPIO as GPIO
+from sensor import Sensor
 
 lastPrice = []
 lastSensorData = {"date": [],"Solar": [], "Battery": [], "Usage": []}
@@ -82,13 +82,13 @@ def background_thread():
         maxCharge = 90
         if (CheckPrice() and relays["R7"]["state"] != "on" and charge > minCharge) or (charge > maxCharge and relays["R7"]["state"] != "on"):
             pin = int(relays["R7"]["pin"])
-            # GPIO.output(pin, GPIO.LOW)
+            GPIO.output(pin, GPIO.LOW)
             relays["R7"]["state"] = "on"
             socketio.emit("UpdateButtons", {"Relay": "R7", "State": "on"})
             print("Stroomteruglevering aan")
         elif (CheckPrice() and charge <= minCharge and relays["R7"]["state"] != "off") or (charge <= maxCharge and relays["R7"]["state"] != "off"):
             pin = int(relays["R7"]["pin"])
-            # GPIO.output(pin, GPIO.HIGH)
+            GPIO.output(pin, GPIO.HIGH)
             relays["R7"]["state"] = "off"
             socketio.emit("UpdateButtons", {"Relay":"R7", "State": "off"})
             print("Stroomteruglevering uit")
@@ -138,12 +138,12 @@ def Handle_GPIO(data):
     if state != data["state"]:
         if data["state"] == "on":
             print("turning on", pin)
-            # GPIO.output(pin, GPIO.LOW)
+            GPIO.output(pin, GPIO.LOW)
             relays[data["relay"]]["state"] = "on"
             socketio.emit("UpdateButtons", {"Relay": data["relay"], "State": "on"})
         elif data["state"] == "off":
             print("turning off", pin)
-            # GPIO.output(pin, GPIO.HIGH)
+            GPIO.output(pin, GPIO.HIGH)
             relays[data["relay"]]["state"] = "off"
             socketio.emit("UpdateButtons", {"Relay": data["relay"], "State": "off"})
     socketio.sleep(10)
@@ -151,4 +151,4 @@ def Handle_GPIO(data):
 
 if __name__ == "__main__":
     socketio.run(app)
-    # GPIO.cleanup()
+    GPIO.cleanup()
