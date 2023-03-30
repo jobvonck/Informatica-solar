@@ -279,6 +279,28 @@ td {
   height: 161.75px;
 }
 
+.Allbutton {
+  border: 0;
+  border-radius: 25px;
+  height: 78px;
+  width: 25%;
+  margin: auto;
+  background-color: white;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  font-size: 16px;
+}
+
+.Allbutton:hover{
+  background-color: #ebf2f6;
+  border: 5px white;
+}
+
+.endbuttons{
+  display: flex;
+  margin: auto;
+  width: 40%;
+}
+
 @media screen and (max-width:1000px) {
   .container {
     width: auto;

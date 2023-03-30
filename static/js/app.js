@@ -1,7 +1,6 @@
 $(document).ready(function () {
   const clock = document.querySelector('.clock');
-
-  // Assigning time values to constants 
+ 
   const tick = () => {
     const now = new Date();
     let h = now.getHours();
@@ -11,7 +10,6 @@ $(document).ready(function () {
     var today = new Date();
     var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
 
-    // Defining html for digital clock
     const html =
       `<h1 style="text-align:center; margin-bottom:0;">
     <span>${("0" + h).slice(-2)}</span> : 
@@ -20,11 +18,9 @@ $(document).ready(function () {
     <p style="text-align:center;">${date}</p>
     `;
 
-    //printing html code inside div.clock
     clock.innerHTML = html;
   };
 
-  //refreshing clock every 1 second
   setInterval(tick, 1000);
 
   var socket = io.connect();
@@ -58,11 +54,8 @@ $(document).ready(function () {
   }
 
   const MAX_DATA_COUNT = 50;
-  //connect to the socket server.
-  //   var socket = io.connect("http://" + document.domain + ":" + location.port);
   var socket = io.connect();
 
-  //receive details from server
   socket.on("UpdateSensorData", function (msg) {
     document.getElementById("mprice").innerHTML = "€" + msg.Price[0];
     document.getElementById("price").innerHTML = "€" + msg.Price[1];
@@ -81,7 +74,6 @@ $(document).ready(function () {
       document.getElementById("charge").classList.remove('off');
     }
 
-    // Show only MAX_DATA_COUNT data
     if (myChart.data.labels.length > MAX_DATA_COUNT) {
       removeFirstData();
     }

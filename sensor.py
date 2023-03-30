@@ -22,6 +22,9 @@ class Sensor:
         self.bus_voltage1 = self.sensor1.bus_voltage  # voltage on V- (load side)
         self.shunt_voltage1 = self.sensor1.shunt_voltage  # voltage between V+ and V- across the shunt
 
+        self.bus_voltage2 = self.sensor2.bus_voltage  # voltage on V- (load side)
+        self.shunt_voltage2 = self.sensor2.shunt_voltage  # voltage between V+ and V- across the shunt
+
         self.voltage1 = self.bus_voltage1 + self.shunt_voltage1
         self.voltage2 = self.bus_voltage + self.shunt_voltage
 
@@ -33,11 +36,11 @@ class Sensor:
 
         self.usage = self.power1 - self.power2
         return {
-            "BatteryVoltage": self.voltage1,
-            "SolarVoltage": self.voltage2,
-            "BatteryCurrent": self.current1,
-            "SolarCurrent": self.current2,
-            "BatteryPower": self.power1,
-            "SolarPower": self.power2,
-            "Usage": abs(self.usage),
+            "BatteryVoltage": round(self.voltage1, 2),
+            "SolarVoltage": round(self.voltage2, 2),
+            "BatteryCurrent": round(self.current1, 2),
+            "SolarCurrent": round(self.current2, 2),
+            "BatteryPower": round(elf.power1, 2),
+            "SolarPower": round(self.power2, 2),
+            "Usage": round(abs(self.usage), 2),
         }

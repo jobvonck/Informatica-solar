@@ -4,13 +4,14 @@ from threading import Lock
 from datetime import datetime
 import time
 from helpers import FrankEnergy, CalcBat, GetWeather, GetHighestPrice, CheckPrice
+
 # from sensorTest import TestSensors as Sensor
 
 import RPi.GPIO as GPIO
 from sensor import Sensor
 
 lastPrice = []
-lastSensorData = {"date": [],"Solar": [], "Battery": [], "Usage": []}
+lastSensorData = {"date": [], "Solar": [], "Battery": [], "Usage": []}
 
 
 thread = None
@@ -32,17 +33,21 @@ relays = {
     "R7": {"pin": 5, "state": "off"},
 }
 
-"""state = "running"
+state = "running"
 if state != "DEBUG":
     GPIO.setmode(GPIO.BCM)
     for i in relays:
         GPIO.setup(int(relays[i]["pin"]), GPIO.OUT)
         GPIO.output(int(relays[i]["pin"]), GPIO.HIGH)
-    # from sensorTest import TestSensors as sensor"""
 
-stad = "Groningen"
+stad = "Gemeente Groningen"
 
 sensor = Sensor()
+
+minCharge = 20
+maxCharge = 90
+
+overide = False
 
 
 def get_current_datetime():
@@ -73,27 +78,31 @@ def background_thread():
         if len(lastSensorData) >= 50:
             if i in lastSensorData:
                 lastSensorData[i].pop(0)
-        lastSensorData['date'].append(get_current_datetime())
-        lastSensorData['Solar'].append(data["SolarPower"])
-        lastSensorData['Battery'].append(data["BatteryPower"])
-        lastSensorData['Usage'].append(data["Usage"])
+        lastSensorData["date"].append(get_current_datetime())
+        lastSensorData["Solar"].append(data["SolarPower"])
+        lastSensorData["Battery"].append(data["BatteryPower"])
+        lastSensorData["Usage"].append(data["Usage"])
 
-        minCharge = 20
-        maxCharge = 90
-        if (CheckPrice() and relays["R7"]["state"] != "on" and charge > minCharge) or (charge > maxCharge and relays["R7"]["state"] != "on"):
+        if (
+            (CheckPrice() and relays["R7"]["state"] != "on" and charge > minCharge)
+            or (charge > maxCharge and relays["R7"]["state"] != "on")
+        ) and not overide:
             pin = int(relays["R7"]["pin"])
             GPIO.output(pin, GPIO.LOW)
             relays["R7"]["state"] = "on"
             socketio.emit("UpdateButtons", {"Relay": "R7", "State": "on"})
             print("Stroomteruglevering aan")
-        elif (CheckPrice() and charge <= minCharge and relays["R7"]["state"] != "off") or (charge <= maxCharge and relays["R7"]["state"] != "off"):
+        elif (
+            (CheckPrice() and charge <= minCharge and relays["R7"]["state"] != "off")
+            or (charge <= maxCharge and relays["R7"]["state"] != "off")
+        ) and not overide:
             pin = int(relays["R7"]["pin"])
             GPIO.output(pin, GPIO.HIGH)
             relays["R7"]["state"] = "off"
-            socketio.emit("UpdateButtons", {"Relay":"R7", "State": "off"})
+            socketio.emit("UpdateButtons", {"Relay": "R7", "State": "off"})
             print("Stroomteruglevering uit")
 
-        socketio.sleep(2)
+        socketio.sleep(5)
 
 
 @app.route("/")
@@ -151,4 +160,4 @@ def Handle_GPIO(data):
 
 if __name__ == "__main__":
     socketio.run(app)
-    GPIO.cleanup()
+    # GPIO.cleanup()
