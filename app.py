@@ -160,4 +160,4 @@ def Handle_GPIO(data):
 
 if __name__ == "__main__":
     socketio.run(app)
-    # GPIO.cleanup()
+    GPIO.cleanup()
