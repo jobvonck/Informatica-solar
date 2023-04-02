@@ -4,7 +4,6 @@ from dateutil import parser
 import json
 import csv
 from scipy import integrate
-import csv
 
 # terug leveren https://www.frankenergie.nl/saldering-bij-dynamische-contracten
 def FrankEnergy():
