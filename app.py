@@ -14,10 +14,10 @@ from helpers import (
     CalculateWh,
 )
 
-# from sensorTest import TestSensors as Sensor
+from sensorTest import TestSensors as Sensor
 
-import RPi.GPIO as GPIO
-from sensor import Sensor
+"""import RPi.GPIO as GPIO
+from sensor import Sensor"""
 
 lastPrice = []
 lastSensorData = {"date": [], "Solar": [], "Battery": [], "Usage": []}
@@ -41,12 +41,12 @@ relays = {
     "R7": {"pin": 5, "state": "off"},
 }
 
-state = "running"
+"""state = "running"
 if state != "DEBUG":
     GPIO.setmode(GPIO.BCM)
     for i in relays:
         GPIO.setup(int(relays[i]["pin"]), GPIO.OUT)
-        GPIO.output(int(relays[i]["pin"]), GPIO.HIGH)
+        GPIO.output(int(relays[i]["pin"]), GPIO.HIGH)"""
 
 stad = "Gemeente Groningen"
 
@@ -113,7 +113,7 @@ def background_thread():
             or (charge > maxCharge and relays["R7"]["state"] != "on")
         ) and not overide:
             pin = int(relays["R7"]["pin"])
-            GPIO.output(pin, GPIO.LOW)
+            #GPIO.output(pin, GPIO.LOW)
             relays["R7"]["state"] = "on"
             socketio.emit("UpdateButtons", {"Relay": "R7", "State": "on"})
             print("Stroomteruglevering aan")
@@ -122,7 +122,7 @@ def background_thread():
             or (charge <= maxCharge and relays["R7"]["state"] != "off")
         ) and not overide:
             pin = int(relays["R7"]["pin"])
-            GPIO.output(pin, GPIO.HIGH)
+            #GPIO.output(pin, GPIO.HIGH)
             relays["R7"]["state"] = "off"
             socketio.emit("UpdateButtons", {"Relay": "R7", "State": "off"})
             print("Stroomteruglevering uit")
@@ -172,12 +172,12 @@ def Handle_GPIO(data):
     if state != data["state"]:
         if data["state"] == "on":
             print("turning on", pin)
-            GPIO.output(pin, GPIO.LOW)
+            #GPIO.output(pin, GPIO.LOW)
             relays[data["relay"]]["state"] = "on"
             socketio.emit("UpdateButtons", {"Relay": data["relay"], "State": "on"})
         elif data["state"] == "off":
             print("turning off", pin)
-            GPIO.output(pin, GPIO.HIGH)
+            #GPIO.output(pin, GPIO.HIGH)
             relays[data["relay"]]["state"] = "off"
             socketio.emit("UpdateButtons", {"Relay": data["relay"], "State": "off"})
     socketio.sleep(10)
@@ -185,4 +185,4 @@ def Handle_GPIO(data):
 
 if __name__ == "__main__":
     socketio.run(app)
-    GPIO.cleanup()
+    #GPIO.cleanup()
