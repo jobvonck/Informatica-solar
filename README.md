@@ -14,4 +14,4 @@ De pagina voor het aansturen van de relays doormiddel van knoppen
 
 
 
-![dashboard](/static/images/phone.png)
+![telefoon](/static/images/phone.jpeg)
