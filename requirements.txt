@@ -1,1 +1,11 @@
 flask_socketio
+scipy
+requests
+datetime
+json
+csv
+python-dateutil
+time
+threading
+adafruit-circuitpython-ina219
+RPi.GPIO

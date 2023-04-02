@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO
-from threading import Lock
 from datetime import datetime
+from threading import Lock
 import time
 from helpers import (
     FrankEnergy,

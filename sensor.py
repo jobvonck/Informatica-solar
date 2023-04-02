@@ -1,7 +1,6 @@
 import board
 import busio
 from adafruit_ina219 import ADCResolution, BusVoltageRange, INA219
-from random import random, randrange
 
 
 class Sensor:
