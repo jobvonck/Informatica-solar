@@ -171,7 +171,8 @@ body {
 
 .prijzen h1,
 .batterij h1,
-.stroom h1 {
+.stroom h1,
+.productie h1 {
   margin: 0;
   text-align: center;
   font-size: 35px;

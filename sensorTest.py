@@ -9,10 +9,10 @@ class TestSensors:
         self.power1 = round(random() * 100, 1)
         self.power2 = round(random() * 100, 1)
 
-        self.voltage1 = randrange(1163,1289)/100
+        self.voltage1 = randrange(1163, 1289) / 100
         self.voltage2 = 12
-        self.current1 = round(self.power1/self.voltage1,2)
-        self.current2 = round(self.power2/self.voltage2,2)
+        self.current1 = round(self.power1 / self.voltage1, 2)
+        self.current2 = round(self.power2 / self.voltage2, 2)
 
         self.usage = abs(self.power1 - self.power2)
 

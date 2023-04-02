@@ -3,7 +3,16 @@ from flask_socketio import SocketIO
 from threading import Lock
 from datetime import datetime
 import time
-from helpers import FrankEnergy, CalcBat, GetWeather, GetHighestPrice, CheckPrice
+from helpers import (
+    FrankEnergy,
+    CalcBat,
+    GetWeather,
+    GetHighestPrice,
+    CheckPrice,
+    DeleteFilecontent,
+    SaveData,
+    CalculateWh,
+)
 
 # from sensorTest import TestSensors as Sensor
 
@@ -12,7 +21,6 @@ from sensor import Sensor
 
 lastPrice = []
 lastSensorData = {"date": [], "Solar": [], "Battery": [], "Usage": []}
-
 
 thread = None
 thread_lock = Lock()
@@ -56,9 +64,24 @@ def get_current_datetime():
 
 
 def background_thread():
+    DeleteFilecontent()
+    BatteryProd = 0
+    SolarProd = 0
+    lastCalc = 10
+
     while True:
         data = sensor.GetData()
         charge = CalcBat(data["BatteryVoltage"])
+
+        SaveData(data["SolarPower"], data["BatteryPower"])
+
+        if lastCalc == 12:
+            lastCalc = 0
+            SolarProd, BatteryProd = CalculateWh()
+            print(SolarProd, BatteryProd)
+        else:
+            lastCalc += 1
+
         socketio.emit(
             "UpdateSensorData",
             {
@@ -66,8 +89,10 @@ def background_thread():
                 "Battery": data["BatteryPower"],
                 "BatteryVoltage": data["BatteryVoltage"],
                 "BatteryCurrent": data["BatteryCurrent"],
+                "BatteryProduction": BatteryProd,
                 "SolarVoltage": data["SolarVoltage"],
                 "SolarCurrent": data["SolarCurrent"],
+                "SolarProduction": SolarProd,
                 "Usage": data["Usage"],
                 "Price": FrankEnergy()[0:2],
                 "Charge": charge,

@@ -61,6 +61,9 @@ $(document).ready(function () {
     document.getElementById("price").innerHTML = "€" + msg.Price[1];
     document.getElementById("charge").innerHTML = msg.Charge + "<sup>%</sup>";
 
+    document.getElementById("BatteryProduction").innerHTML = msg.BatteryProduction + " kWh";
+    document.getElementById("SolarProduction").innerHTML = msg.SolarProduction + " kWh";
+
     document.getElementById("BatteryVoltage").innerHTML = msg.BatteryVoltage + " V";
     document.getElementById("SolarVoltage").innerHTML = msg.SolarVoltage + " V";
     document.getElementById("BatteryCurrent").innerHTML = msg.BatteryCurrent + " A";

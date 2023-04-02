@@ -2,6 +2,9 @@ import requests
 from datetime import datetime, timedelta, timezone
 from dateutil import parser
 import json
+import csv
+from scipy import integrate
+import csv
 
 # terug leveren https://www.frankenergie.nl/saldering-bij-dynamische-contracten
 def FrankEnergy():
@@ -106,3 +109,42 @@ def CheckPrice():
         return True
     else:
         return False
+
+
+def TimeToInt(dateobj):
+    total = int(dateobj.strftime("%S"))
+    total += int(dateobj.strftime("%M")) * 60
+    total += int(dateobj.strftime("%H")) * 60 * 60
+    total += (int(dateobj.strftime("%j")) - 1) * 60 * 60 * 24
+    total += (int(dateobj.strftime("%Y")) - 1970) * 60 * 60 * 24 * 365
+    return total
+
+
+def DeleteFilecontent():
+    f = open("data.csv", "w")
+    f.truncate()
+    f.close()
+
+
+def SaveData(solar, battery):
+    time = TimeToInt(datetime.now())
+
+    with open("data.csv", mode="a", newline="") as file:
+        writer = csv.writer(file, delimiter=",")
+        writer.writerow([time, solar, battery])
+
+
+def CalculateWh():
+    with open("data.csv", mode="r") as file:
+        reader = csv.reader(file, delimiter=",")
+        xdata = []
+        ysdata = []
+        ybdata = []
+        for row in reader:
+            xdata.append(float(row[0]))
+            ysdata.append(float(row[1]))
+            ybdata.append(float(row[2]))
+
+        Solar = integrate.trapz(ysdata, xdata)
+        Battery = integrate.trapz(ybdata, xdata)
+    return [round(Solar / 1000, 1), round(Battery / 1000, 1)]

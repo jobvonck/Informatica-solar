@@ -23,15 +23,15 @@ class Sensor:
         self.shunt_voltage1 = self.sensor1.shunt_voltage  # voltage between V+ and V- across the shunt
 
         self.bus_voltage2 = self.sensor2.bus_voltage  # voltage on V- (load side)
-        self.shunt_voltage2 = self.sensor2.shunt_voltage  # voltage between V+ and V- across the shunt
+        self.shunt_voltage2 = self.sensor2.shunt_voltage # voltage between V+ and V- across the shunt
 
-        self.voltage1 = self.bus_voltage1 + self.shunt_voltage1
-        self.voltage2 = self.bus_voltage2 + self.shunt_voltage2
+        self.voltage1 = self.bus_voltage1  # + self.shunt_voltage1
+        self.voltage2 = self.bus_voltage2  # + self.shunt_voltage2
 
-        self.current1 = self.sensor1.current/1000
-        self.current2 = self.sensor2.current/1000
+        self.current1 = self.sensor1.current / 1000
+        self.current2 = self.sensor2.current / 1000
 
-        self.power1 = self.sensor1.power  
+        self.power1 = self.sensor1.power
         self.power2 = self.sensor2.power
 
         self.usage = self.power1 - self.power2
