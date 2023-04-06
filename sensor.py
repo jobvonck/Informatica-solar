@@ -30,10 +30,10 @@ class Sensor:
         self.current1 = self.sensor1.current / 1000
         self.current2 = self.sensor2.current / 1000
 
-        self.power1 = self.sensor1.power
+        self.power1 = self.current1 * self.voltage1
         self.power2 = self.sensor2.power
 
-        self.usage = self.power1 - self.power2
+        self.usage = self.power2 + self.power1
         return {
             "BatteryVoltage": round(self.voltage1, 2),
             "SolarVoltage": round(self.voltage2, 2),
