@@ -48,7 +48,7 @@ if state != "DEBUG":
         GPIO.setup(int(relays[i]["pin"]), GPIO.OUT)
         GPIO.output(int(relays[i]["pin"]), GPIO.HIGH)
 
-stad = "Gemeente Groningen"
+stad = "Amersfoort"
 
 sensor = Sensor()
 

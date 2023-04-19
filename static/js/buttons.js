@@ -4,12 +4,11 @@ $(document).ready(function () {
   socket.emit("StartButtons")
 
   socket.on('UpdateButtons', function (data) {
-    if (data.Relay != "R7"){
-      if (data.State == "on") {
-        button = document.getElementById(data.Relay).checked = true;
-      } else {
-        button = document.getElementById(data.Relay).checked = false;
-      };
+    console.log(data);
+    if (data.State == "on") {
+      button = document.getElementById(data.Relay).checked = true;
+    } else {
+      button = document.getElementById(data.Relay).checked = false;
     };
   })
 
@@ -27,7 +26,7 @@ $(document).ready(function () {
     })
   })
 
-  const relays = ["R0","R1","R2","R3","R4","R5","R6"];
+  const relays = ["R0","R1","R2","R3","R4","R5","R6", "R7"];
 
   document.getElementById("off").addEventListener("click", function() {
     relays.forEach(element => SendGpio(element, "off"));
