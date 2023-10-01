@@ -2,7 +2,7 @@
 
 **Accelerating the Green Energy Transition with Innovation**
 
-This project represents an innovative step towards a greener future. It was developed as part of the [PAPI Awards NL](https://www.paconsulting.com/culture/pa-in-the-community/raspberry-pi-competition-uk), where our team was honored with the first prize in the feasibility category. We've designed an invention that optimizes energy utilization from solar panels by intelligently storing and managing power, harnessing the sun's energy to its fullest potential. Additionally, our system utilizes an API to monitor electricity prices and sells excess power when the rates are at their peak.
+This project represents an innovative step towards a greener future. It was developed as part of the [PAPI Awards NL](https://www.kijkophetnoorden.nl/scholieren-van-groningse-gomaruscollege-winnen-prijzen-tijdens-de-5e-raspberry-pi-finale/), where our team was honored with the first prize in the feasibility category. We've designed an invention that optimizes energy utilization from solar panels by intelligently storing and managing power, harnessing the sun's energy to its fullest potential. Additionally, our system utilizes an API to monitor electricity prices and sells excess power when the rates are at their peak.
 
 ![Dashboard](/static/images/dashboard.png)
 *Dashboard displaying dummy data for testing on a PC using sensorTest.py*
