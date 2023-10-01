@@ -10,8 +10,8 @@ This project represents an innovative step towards a greener future. It was deve
 ![Control Panel](/static/images/knoppen.png)
 *Control panel page for managing relays through user-friendly buttons*
 
-<!-- Resize the mobile app image -->
-<img src="/static/images/phone.jpeg" alt="Mobile App" width="300">
+![Mobile App](/static/images/phone.jpeg)
+*Mobile application for seamless control and monitoring*sss
 
 ## Features
 
