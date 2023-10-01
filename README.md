@@ -12,7 +12,7 @@ This project represents an innovative step towards a greener future. It was deve
 - **Relay Control:** Easily manage connected devices using the relay control panel simulated through lights.
 - **Small Scale Replica:** We have created a small scale replica of our idea using Raspberry pi, Battery, Solar panel and Relay board.
 
-![Dashboard](/static/images/model.jpg)
+![Dashboard](/static/images/Model.jpg)
 *This is our model we used the big LED strip represents the energy grid and the small green ligts appliances the model also includes a battery and solar panel but it is not shown*
 
 ![Dashboard](/static/images/dashboard.png)
